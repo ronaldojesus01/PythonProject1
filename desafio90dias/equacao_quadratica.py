@@ -3,37 +3,64 @@ print('=' * 50, 'EQUAÇÃO QUADRÁTICA', '=' * 50)
 
 print('Digite os coeficientes abaixo:')
 
-while True:
-    try:
-        a = float(input('A = '))
-    except ValueError:
-        print('Digite um número válido!')
-        continue
-    if a == 0:
-        print('O coeficiente A não pode ser igual a zero.')
-        continue
-    break
+def perg_coef():
+    while True:
+        global a1, b1, c1
+        try:
+            a1 = float(input('A = '))
+        except ValueError:
+            print('Digite um número válido!')
+            continue
+        if a1 == 0:
+            print('O coeficiente A não pode ser igual a zero.')
+            continue
+        break
 
-while True:
-    try:
-        b = float(input('B = '))
-    except ValueError:
-        print('Digite um número válido!')
-        continue
-    break
+    while True:
+        try:
+            b1 = float(input('B = '))
+        except ValueError:
+            print('Digite um número válido!')
+            continue
+        break
 
-while True:
-    try:
-        c = float(input('C = '))
-    except ValueError:
-        print('Digite um número válido!')
-        continue
-    break
+    while True:
+        try:
+            c1 = float(input('C = '))
+        except ValueError:
+            print('Digite um número válido!')
+            continue
+        break
 
-delta = pow(b, 2) - 4 * a * b * c
+    dados_ = {
+        'a': a1,
+        'b': b1,
+        'c': c1
+    }
+    return dados_
 
-x1 = (-b + math.sqrt(delta)) / (2 * a)
-x2 = (-b - (delta)) / (2 * a)
+def calc(dados):
+    delta_ = pow(dados['b'], 2) - 4 * dados['a'] * dados['c']
+    x1_ = (-dados['b'] + math.sqrt(delta_)) / (2 * dados['a'])
+    x2_ = (-dados['b'] - math.sqrt(delta_)) / (2 * dados['a'])
 
-print(f'X1: {x1: .4f}')
-print(f'X2: {x2: .4f}')
+    x1_x2_delta = {
+        'delta': delta_,
+        'x1': x1_,
+        'x2': x2_
+    }
+
+    return x1_x2_delta
+
+def resul(calculo):
+    if calculo['delta'] >= 0:
+        print('=' * 50, 'RESULTADOS', '=' * 50)
+        print(f'Delta: {calculo['delta']: .2f}')
+        print(f'X1: {calculo['x1']: .2f}')
+        print(f'X2: {calculo['x2']: .2f}')
+    else:
+        print('A equação não possui raizes reais, pois delta é menor que zero.')
+
+dados = perg_coef()
+calculo = calc(dados)
+resultado = resul(calculo)
