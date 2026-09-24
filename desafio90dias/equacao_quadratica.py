@@ -5,7 +5,6 @@ print('Digite os coeficientes abaixo:')
 
 def perg_coef():
     while True:
-        global a1, b1, c1
         try:
             a1 = float(input('A = '))
         except ValueError:
@@ -41,16 +40,26 @@ def perg_coef():
 
 def calc(dados):
     delta_ = pow(dados['b'], 2) - 4 * dados['a'] * dados['c']
-    x1_ = (-dados['b'] + math.sqrt(delta_)) / (2 * dados['a'])
-    x2_ = (-dados['b'] - math.sqrt(delta_)) / (2 * dados['a'])
 
-    x1_x2_delta = {
-        'delta': delta_,
-        'x1': x1_,
-        'x2': x2_
-    }
+    if delta_ < 0:
+        msg_ = f'A equação não possui raizes reais, pois delta é menor que zero\n delta = {delta_} | (delta < 0)'
 
-    return x1_x2_delta
+        delta_negativo = {
+            'delta': delta_,
+            'msg': msg_
+        }
+        return delta_negativo
+    else:
+        x1_ = (-dados['b'] + math.sqrt(delta_)) / (2 * dados['a'])
+        x2_ = (-dados['b'] - math.sqrt(delta_)) / (2 * dados['a'])
+
+        x1_x2_delta = {
+            'delta': delta_,
+            'x1': x1_,
+            'x2': x2_
+        }
+
+        return x1_x2_delta
 
 def resul(calculo):
     if calculo['delta'] >= 0:
@@ -59,8 +68,8 @@ def resul(calculo):
         print(f'X1: {calculo['x1']: .2f}')
         print(f'X2: {calculo['x2']: .2f}')
     else:
-        print('A equação não possui raizes reais, pois delta é menor que zero.')
+        print(calculo['msg'])
 
 dados = perg_coef()
 calculo = calc(dados)
-resultado = resul(calculo)
+resul(calculo)
