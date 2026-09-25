@@ -49,6 +49,16 @@ def calc(dados):
             'msg': msg_
         }
         return delta_negativo
+    elif delta_ == 0:
+        msg_ = f'A equação só possui uma raiz real, pois delta é igual a zero\n Delta = {delta_} | (delta = 0)'
+        x12_ = (-dados['b']) / (2 * dados['a'])
+
+        x12_msg = {
+            'delta': delta_,
+            'msg': msg_,
+            'x12': x12_
+        }
+        return x12_msg
     else:
         x1_ = (-dados['b'] + math.sqrt(delta_)) / (2 * dados['a'])
         x2_ = (-dados['b'] - math.sqrt(delta_)) / (2 * dados['a'])
@@ -62,12 +72,17 @@ def calc(dados):
         return x1_x2_delta
 
 def resul(calculo):
-    if calculo['delta'] >= 0:
+    if calculo['delta'] > 0:
         print('=' * 50, 'RESULTADOS', '=' * 50)
         print(f'Delta: {calculo['delta']: .2f}')
         print(f'X1: {calculo['x1']: .2f}')
         print(f'X2: {calculo['x2']: .2f}')
+    elif calculo['delta'] == 0:
+        print('=' * 50, 'RESULTADO', '=' * 50)
+        print(calculo['msg'])
+        print(f'X1 e X2: {calculo['x12']: .2f}')
     else:
+        print('=' * 50, 'RESULTADO', '=' * 50)
         print(calculo['msg'])
 
 dados = perg_coef()
